@@ -21,5 +21,10 @@ function handleSubmit(event) {
     const url = `https://pixabay.com/api/?${searchParams}`;
     console.log(url);
     
-    fetch(url).then(response => response.json()).then(console.log)
+    fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+    return response.json();
+  }).then(console.log)
 }
