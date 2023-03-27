@@ -33,6 +33,10 @@ export default class ImagesApiService {
       });
   }
 
+  resetPage() {
+    this.page = 1;
+  }
+
   get query() {
     return this.searchQuery;
   }
