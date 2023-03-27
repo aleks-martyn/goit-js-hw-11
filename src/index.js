@@ -15,7 +15,7 @@ function handleSubmit(event) {
 
   imagesApiService.query = event.currentTarget.elements.searchQuery.value;
   imagesApiService.resetPage();
-  imagesApiService.fetchImages();
+  imagesApiService.fetchImages().then(hits => console.log(hits));
 }
 
 function handleLoadMoreBtnClick(event) {
