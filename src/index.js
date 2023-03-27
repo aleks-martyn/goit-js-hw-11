@@ -1,37 +1,25 @@
 import './css/styles.css';
+import ImagesApiService from './searchImages-api';
 
 const formEl = document.querySelector('#search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 
+const imagesApiService = new ImagesApiService();
+
 formEl.addEventListener('submit', handleSubmit);
+loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
+
+let searchQuery = '';
 
 function handleSubmit(event) {
   event.preventDefault();
 
-  const searchQuery = event.currentTarget.elements.searchQuery.value;
-  const BASE_URL = 'https://pixabay.com/api/';
-  const API_KEY = '34753059-f7902d1f02de9c533025c1a5e';
+  searchQuery = event.currentTarget.elements.searchQuery.value;
 
-  const searchParams = new URLSearchParams({
-    key: `${API_KEY}`,
-    q: `${searchQuery}`,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: 'true',
-    per_page: 40,
-    page: 1,
-  });
+  imagesApiService.fetchImages(searchQuery);
+}
 
-  const url = `${BASE_URL}?${searchParams}`;
-  console.log(url);
-
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return response.json();
-    })
-    .then(console.log);
+function handleLoadMoreBtnClick(event) {
+  imagesApiService.fetchImages(searchQuery);
 }
