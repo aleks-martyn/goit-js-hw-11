@@ -8,21 +8,26 @@ const loadMoreBtn = document.querySelector('.load-more');
 
 const imagesApiService = new ImagesApiService();
 
+loadMoreBtn.classList.add('is-hidden');
+
 formEl.addEventListener('submit', handleSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 
 function handleSubmit(event) {
   event.preventDefault();
 
-  clearCardsContainer();
-    imagesApiService.query = event.currentTarget.elements.searchQuery.value;
-    
-    if (imagesApiService.query === '') {
-        return Notiflix.Notify.failure('The line is empty!');
-    }
+  imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+
+  if (imagesApiService.query === '') {
+    return Notiflix.Notify.failure('The line is empty!');
+  }
 
   imagesApiService.resetPage();
-  imagesApiService.fetchImages().then(renderGallery);
+  imagesApiService.fetchImages().then(hits => {
+    clearCardsContainer();
+    renderGallery(hits);
+    loadMoreBtn.classList.remove('is-hidden');
+  });
 }
 
 function handleLoadMoreBtnClick(event) {
