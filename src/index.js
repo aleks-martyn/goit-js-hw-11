@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 import './css/styles.css';
 import ImagesApiService from './searchImages-api';
 
@@ -13,7 +14,13 @@ loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 function handleSubmit(event) {
   event.preventDefault();
 
-  imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+  clearCardsContainer();
+    imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+    
+    if (imagesApiService.query === '') {
+        return Notiflix.Notify.failure('The line is empty!');
+    }
+
   imagesApiService.resetPage();
   imagesApiService.fetchImages().then(renderGallery);
 }
@@ -46,4 +53,8 @@ function renderGallery(hits) {
     .join('');
 
   galleryEl.insertAdjacentHTML('beforeend', markup);
+}
+
+function clearCardsContainer() {
+  galleryEl.innerHTML = '';
 }
