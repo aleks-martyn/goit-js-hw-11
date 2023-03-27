@@ -1,3 +1,6 @@
+const BASE_URL = 'https://pixabay.com/api/';
+const API_KEY = '34753059-f7902d1f02de9c533025c1a5e';
+
 export default class ImagesApiService {
   constructor() {
     this.searchQuery = '';
@@ -5,9 +8,6 @@ export default class ImagesApiService {
   }
 
   fetchImages() {
-    const BASE_URL = 'https://pixabay.com/api/';
-    const API_KEY = '34753059-f7902d1f02de9c533025c1a5e';
-
     const searchParams = new URLSearchParams({
       key: `${API_KEY}`,
       q: `${this.searchQuery}`,
@@ -27,9 +27,9 @@ export default class ImagesApiService {
         }
         return response.json();
       })
-      .then(data => {
+      .then(({ hits }) => {
         this.page += 1;
-        return data.hits;
+        return hits;
       });
   }
 
