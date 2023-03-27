@@ -2,6 +2,7 @@ import './css/styles.css';
 
 const formEl = document.querySelector('#search-form');
 const galleryEl = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
 
 formEl.addEventListener('submit', handleSubmit);
 
