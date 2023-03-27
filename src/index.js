@@ -9,6 +9,7 @@ function handleSubmit(event) {
   event.preventDefault();
 
   const searchQuery = event.currentTarget.elements.searchQuery.value;
+  const BASE_URL = 'https://pixabay.com/api/';
   const API_KEY = '34753059-f7902d1f02de9c533025c1a5e';
 
   const searchParams = new URLSearchParams({
@@ -21,7 +22,7 @@ function handleSubmit(event) {
     page: 1,
   });
 
-  const url = `https://pixabay.com/api/?${searchParams}`;
+  const url = `${BASE_URL}?${searchParams}`;
   console.log(url);
 
   fetch(url)
