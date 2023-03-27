@@ -14,7 +14,7 @@ function handleSubmit(event) {
   event.preventDefault();
 
   imagesApiService.query = event.currentTarget.elements.searchQuery.value;
-
+  imagesApiService.resetPage();
   imagesApiService.fetchImages();
 }
 
