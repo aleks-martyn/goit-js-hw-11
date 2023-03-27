@@ -16,6 +16,11 @@ loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 function handleSubmit(event) {
   event.preventDefault();
 
+  if (!loadMoreBtn.classList.contains('is-hidden')) {
+    loadMoreBtn.classList.add('is-hidden');
+  }
+
+  event.target.lastElementChild.setAttribute('disabled', true);
   imagesApiService.query = event.currentTarget.elements.searchQuery.value;
 
   if (imagesApiService.query === '') {
@@ -26,12 +31,17 @@ function handleSubmit(event) {
   imagesApiService.fetchImages().then(hits => {
     clearCardsContainer();
     renderGallery(hits);
+    event.target.lastElementChild.removeAttribute('disabled');
     loadMoreBtn.classList.remove('is-hidden');
   });
 }
 
 function handleLoadMoreBtnClick(event) {
-  imagesApiService.fetchImages().then(renderGallery);
+  event.target.setAttribute('disabled', true);
+  imagesApiService.fetchImages().then(hits => {
+    renderGallery(hits);
+    event.target.removeAttribute('disabled');
+  });
 }
 
 function renderGallery(hits) {
