@@ -1,2 +1,0 @@
-const e=document.querySelector("#search-form");document.querySelector(".gallery"),document.querySelector(".load-more");e.addEventListener("submit",(function(e){e.preventDefault();const t=e.currentTarget.elements.searchQuery.value,r=new URLSearchParams({key:"34753059-f7902d1f02de9c533025c1a5e",q:`${t}`,image_type:"photo",orientation:"horizontal",safesearch:"true",per_page:40,page:1}),o=`https://pixabay.com/api/?${r}`;console.log(o),fetch(o).then((e=>{if(!e.ok)throw new Error(e.status);return e.json()})).then(console.log)}));
-//# sourceMappingURL=index.85cdc477.js.map
