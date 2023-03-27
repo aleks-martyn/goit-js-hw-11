@@ -1,6 +1,7 @@
 export default class ImagesApiService {
   constructor() {
     this.searchQuery = '';
+    this.page = 1;
   }
 
   fetchImages() {
@@ -14,7 +15,7 @@ export default class ImagesApiService {
       orientation: 'horizontal',
       safesearch: 'true',
       per_page: 40,
-      page: 1,
+      page: `${this.page}`,
     });
 
     const url = `${BASE_URL}?${searchParams}`;
@@ -27,7 +28,9 @@ export default class ImagesApiService {
         }
         return response.json();
       })
-      .then(console.log);
+      .then(data => {
+        this.page += 1;
+      });
   }
 
   get query() {
