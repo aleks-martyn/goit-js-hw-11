@@ -15,9 +15,35 @@ function handleSubmit(event) {
 
   imagesApiService.query = event.currentTarget.elements.searchQuery.value;
   imagesApiService.resetPage();
-  imagesApiService.fetchImages().then(hits => console.log(hits));
+  imagesApiService.fetchImages().then(renderGallery);
 }
 
 function handleLoadMoreBtnClick(event) {
-  imagesApiService.fetchImages();
+  imagesApiService.fetchImages().then(renderGallery);
+}
+
+function renderGallery(hits) {
+  const markup = hits
+    .map(hit => {
+      return `<div class="photo-card">
+        <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
+        <div class="info">
+          <p class="info-item">
+            <b>Likes</b><br>${hit.likes}
+          </p>
+          <p class="info-item">
+            <b>Views</b><br>${hit.views}
+          </p>
+          <p class="info-item">
+            <b>Comments</b><br>${hit.comments}
+          </p>
+          <p class="info-item">
+            <b>Downloads</b><br>${hit.downloads}
+          </p>
+         </div>
+        </div>`;
+    })
+    .join('');
+
+  galleryEl.insertAdjacentHTML('beforeend', markup);
 }
