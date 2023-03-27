@@ -19,9 +19,8 @@ export default class ImagesApiService {
     });
 
     const url = `${BASE_URL}?${searchParams}`;
-    console.log(url);
 
-    fetch(url)
+    return fetch(url)
       .then(response => {
         if (!response.ok) {
           throw new Error(response.status);
@@ -30,6 +29,7 @@ export default class ImagesApiService {
       })
       .then(data => {
         this.page += 1;
+        return data.hits;
       });
   }
 
