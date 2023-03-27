@@ -10,16 +10,14 @@ const imagesApiService = new ImagesApiService();
 formEl.addEventListener('submit', handleSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 
-let searchQuery = '';
-
 function handleSubmit(event) {
   event.preventDefault();
 
-  searchQuery = event.currentTarget.elements.searchQuery.value;
+  imagesApiService.query = event.currentTarget.elements.searchQuery.value;
 
-  imagesApiService.fetchImages(searchQuery);
+  imagesApiService.fetchImages();
 }
 
 function handleLoadMoreBtnClick(event) {
-  imagesApiService.fetchImages(searchQuery);
+  imagesApiService.fetchImages();
 }
