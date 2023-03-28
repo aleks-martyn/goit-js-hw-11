@@ -12,9 +12,11 @@ loadMoreBtn.classList.add('is-hidden');
 
 formEl.addEventListener('submit', handleSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
+let hitsCounter = 0;
 
 function handleSubmit(event) {
   event.preventDefault();
+  hitsCounter = 0;
 
   if (!loadMoreBtn.classList.contains('is-hidden')) {
     loadMoreBtn.classList.add('is-hidden');
@@ -28,7 +30,11 @@ function handleSubmit(event) {
   }
 
   imagesApiService.resetPage();
-  imagesApiService.fetchImages().then(hits => {
+  imagesApiService.fetchImages().then(data => {
+    const { hits } = data;
+    
+    hitsCounter += hits.length;
+    console.log(hitsCounter);
     clearCardsContainer();
     renderGallery(hits);
     event.target.lastElementChild.removeAttribute('disabled');
@@ -38,7 +44,13 @@ function handleSubmit(event) {
 
 function handleLoadMoreBtnClick(event) {
   event.target.setAttribute('disabled', true);
-  imagesApiService.fetchImages().then(hits => {
+  imagesApiService.fetchImages().then(data => {
+    const { hits, totalHits } = data;
+    hitsCounter += hits.length;
+    console.log(hitsCounter);
+    if (hitsCounter >= totalHits) {
+      loadMoreBtn.classList.add('is-hidden');
+    }
     renderGallery(hits);
     event.target.removeAttribute('disabled');
   }).catch(console.log);
