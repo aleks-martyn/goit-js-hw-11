@@ -33,7 +33,7 @@ function handleSubmit(event) {
     renderGallery(hits);
     event.target.lastElementChild.removeAttribute('disabled');
     loadMoreBtn.classList.remove('is-hidden');
-  });
+  }).catch(console.log);
 }
 
 function handleLoadMoreBtnClick(event) {
@@ -41,7 +41,7 @@ function handleLoadMoreBtnClick(event) {
   imagesApiService.fetchImages().then(hits => {
     renderGallery(hits);
     event.target.removeAttribute('disabled');
-  });
+  }).catch(console.log);
 }
 
 function renderGallery(hits) {
