@@ -50,8 +50,9 @@ button[type="submit"] {
 
 .info {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
+  padding: 10px;
 }
 
 .info-item {
