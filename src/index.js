@@ -32,11 +32,13 @@ function handleSubmit(event) {
   imagesApiService.resetPage();
   imagesApiService.fetchImages().then(data => {
     const { hits } = data;
-    
+
     hitsCounter += hits.length;
     console.log(hitsCounter);
+
     clearCardsContainer();
     renderGallery(hits);
+    Notiflix.Notify.success("Hooray! We found 500 images.");
     event.target.lastElementChild.removeAttribute('disabled');
     loadMoreBtn.classList.remove('is-hidden');
   }).catch(console.log);
@@ -46,11 +48,14 @@ function handleLoadMoreBtnClick(event) {
   event.target.setAttribute('disabled', true);
   imagesApiService.fetchImages().then(data => {
     const { hits, totalHits } = data;
+
     hitsCounter += hits.length;
     console.log(hitsCounter);
     if (hitsCounter >= totalHits) {
       loadMoreBtn.classList.add('is-hidden');
+      Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
     }
+
     renderGallery(hits);
     event.target.removeAttribute('disabled');
   }).catch(console.log);
