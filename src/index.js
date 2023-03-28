@@ -30,35 +30,51 @@ function handleSubmit(event) {
   }
 
   imagesApiService.resetPage();
-  imagesApiService.fetchImages().then(data => {
-    const { hits } = data;
+  imagesApiService
+    .fetchImages()
+    .then(data => {
+      const { hits, totalHits } = data;
 
-    hitsCounter += hits.length;
-    console.log(hitsCounter);
+      if (hits.length === 0) {
+        Notiflix.Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      } else if (hits.length === totalHits) {
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+      } else {
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        loadMoreBtn.classList.remove('is-hidden');
+      }
 
-    clearCardsContainer();
-    renderGallery(hits);
-    Notiflix.Notify.success("Hooray! We found 500 images.");
-    event.target.lastElementChild.removeAttribute('disabled');
-    loadMoreBtn.classList.remove('is-hidden');
-  }).catch(console.log);
+      hitsCounter += hits.length;
+
+      clearCardsContainer();
+      renderGallery(hits);
+      event.target.lastElementChild.removeAttribute('disabled');
+    })
+    .catch(console.log);
 }
 
 function handleLoadMoreBtnClick(event) {
   event.target.setAttribute('disabled', true);
-  imagesApiService.fetchImages().then(data => {
-    const { hits, totalHits } = data;
+  imagesApiService
+    .fetchImages()
+    .then(data => {
+      const { hits, totalHits } = data;
 
-    hitsCounter += hits.length;
-    console.log(hitsCounter);
-    if (hitsCounter >= totalHits) {
-      loadMoreBtn.classList.add('is-hidden');
-      Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
-    }
+      hitsCounter += hits.length;
 
-    renderGallery(hits);
-    event.target.removeAttribute('disabled');
-  }).catch(console.log);
+      if (hitsCounter >= totalHits) {
+        loadMoreBtn.classList.add('is-hidden');
+        Notiflix.Notify.failure(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+
+      renderGallery(hits);
+      event.target.removeAttribute('disabled');
+    })
+    .catch(console.log);
 }
 
 function renderGallery(hits) {
