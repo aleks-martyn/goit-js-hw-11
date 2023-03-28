@@ -81,7 +81,7 @@ function renderGallery(hits) {
   const markup = hits
     .map(hit => {
       return `<div class="photo-card">
-        <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
+        <img src="${hit.webformatURL}" alt="${hit.tags}" width="320" loading="lazy" />
         <div class="info">
           <p class="info-item">
             <b>Likes</b><br>${hit.likes}
