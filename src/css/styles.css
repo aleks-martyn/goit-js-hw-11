@@ -9,7 +9,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
   color: #212121;
-  line-height: 1.5;
 }
 
 img {
@@ -49,6 +48,9 @@ button[type='submit'] {
 }
 
 .photo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   max-width: calc((100% - 3 * 20px) / 4);
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
@@ -63,14 +65,23 @@ button[type='submit'] {
 .info {
   display: flex;
   gap: 15px;
-  justify-content: center;
-  align-items: end;
+  justify-content: space-around;
   padding: 10px;
+  padding-left: 5px;
 }
 
 .info-item {
-  display: block;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc((100% - 3 * 15px) / 4);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.info-text {
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 .load-more {
