@@ -23,9 +23,10 @@ function handleSubmit(event) {
   }
 
   event.target.lastElementChild.setAttribute('disabled', true);
-  imagesApiService.query = event.currentTarget.elements.searchQuery.value;
+  imagesApiService.query = event.currentTarget.elements.searchQuery.value.trim();
 
   if (imagesApiService.query === '') {
+    event.target.lastElementChild.removeAttribute('disabled');
     return Notiflix.Notify.failure('The line is empty!');
   }
 
@@ -80,8 +81,8 @@ function handleLoadMoreBtnClick(event) {
 function renderGallery(hits) {
   const markup = hits
     .map(hit => {
-      return `<div class="photo-card">
-        <img src="${hit.webformatURL}" alt="${hit.tags}" width="320" loading="lazy" />
+      return `<div class="photo-card"><div class="photo">
+        <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" /></div>
         <div class="info">
           <p class="info-item">
             <b>Likes</b><br>${hit.likes}
