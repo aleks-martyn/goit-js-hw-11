@@ -23,7 +23,8 @@ function handleSubmit(event) {
   }
 
   event.target.lastElementChild.setAttribute('disabled', true);
-  imagesApiService.query = event.currentTarget.elements.searchQuery.value.trim();
+  imagesApiService.query =
+    event.currentTarget.elements.searchQuery.value.trim();
 
   if (imagesApiService.query === '') {
     event.target.lastElementChild.removeAttribute('disabled');
@@ -34,7 +35,9 @@ function handleSubmit(event) {
   imagesApiService
     .fetchImages()
     .then(data => {
-      const { hits, totalHits } = data;
+      const {
+        data: { hits, totalHits },
+      } = data;
 
       if (hits.length === 0) {
         Notiflix.Notify.failure(
