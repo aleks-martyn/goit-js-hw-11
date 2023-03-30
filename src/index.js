@@ -64,7 +64,9 @@ function handleLoadMoreBtnClick(event) {
   imagesApiService
     .fetchImages()
     .then(data => {
-      const { hits, totalHits } = data;
+      const {
+        data: { hits, totalHits },
+      } = data;
 
       hitsCounter += hits.length;
 
