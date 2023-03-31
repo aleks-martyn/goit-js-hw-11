@@ -81,9 +81,8 @@ async function handleLoadMoreBtnClick(event) {
       );
     }
 
-    lightbox.refresh();
     renderGallery(hits);
-    
+    lightbox.refresh();
     event.target.removeAttribute('disabled');
   } catch (error) {
     console.log(error);
