@@ -91,8 +91,10 @@ function handleLoadMoreBtnClick(event) {
 function renderGallery(hits) {
   const markup = hits
     .map(hit => {
-      return `<div class="photo-card"><a class="gallery__item" href="${hit.largeImageURL}">
-        <img class="gallery__image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" /></a>
+      return `<div class="photo-card">
+        <a class="gallery__item" href="${hit.largeImageURL}">
+          <img class="gallery__image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
+        </a>
         <div class="info">
           <p class="info-item">
             <b class="info-text">Likes</b><span>${hit.likes}</span>
@@ -106,7 +108,7 @@ function renderGallery(hits) {
           <p class="info-item">
             <b class="info-text">Downloads</b><span>${hit.downloads}</span>
           </p>
-         </div>
+        </div>
         </div>`;
     })
     .join('');
