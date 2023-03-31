@@ -9,7 +9,7 @@ export default class ImagesApiService {
     this.page = 1;
   }
 
-  fetchImages() {
+  async fetchImages() {
     const searchParams = new URLSearchParams({
       key: `${API_KEY}`,
       q: `${this.searchQuery}`,
@@ -22,10 +22,9 @@ export default class ImagesApiService {
 
     const url = `${BASE_URL}?${searchParams}`;
 
-    return axios.get(url).then(data => {
-      this.page += 1;
-      return data;
-    });
+    const data = await axios.get(url);
+    this.page += 1;
+    return data;
   }
 
   resetPage() {
