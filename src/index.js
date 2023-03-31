@@ -18,7 +18,7 @@ loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 let hitsCounter = 0;
 let lightbox = null;
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
   event.preventDefault();
   hitsCounter = 0;
 
@@ -36,56 +36,60 @@ function handleSubmit(event) {
   }
 
   imagesApiService.resetPage();
-  imagesApiService
-    .fetchImages()
-    .then(data => {
-      const {
-        data: { hits, totalHits },
-      } = data;
 
-      if (hits.length === 0) {
-        Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-      } else if (hits.length === totalHits) {
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-      } else {
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-        loadMoreBtn.classList.remove('is-hidden');
-      }
+  try {
+    const data = await imagesApiService.fetchImages();
 
-      hitsCounter += hits.length;
+    const {
+      data: { hits, totalHits },
+    } = data;
 
-      clearCardsContainer();
-      renderGallery(hits);
-      event.target.lastElementChild.removeAttribute('disabled');
-    })
-    .catch(console.log);
+    if (hits.length === 0) {
+      Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+    } else if (hits.length === totalHits) {
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+    } else {
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+      loadMoreBtn.classList.remove('is-hidden');
+    }
+
+    hitsCounter += hits.length;
+
+    clearCardsContainer();
+    renderGallery(hits);
+    event.target.lastElementChild.removeAttribute('disabled');
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function handleLoadMoreBtnClick(event) {
+async function handleLoadMoreBtnClick(event) {
   event.target.setAttribute('disabled', true);
-  imagesApiService
-    .fetchImages()
-    .then(data => {
-      const {
-        data: { hits, totalHits },
-      } = data;
 
-      hitsCounter += hits.length;
+  try {
+    const data = await imagesApiService.fetchImages();
 
-      if (hitsCounter >= totalHits) {
-        loadMoreBtn.classList.add('is-hidden');
-        Notiflix.Notify.failure(
-          "We're sorry, but you've reached the end of search results."
-        );
-      }
+    const {
+      data: { hits, totalHits },
+    } = data;
 
-      lightbox.refresh();
-      renderGallery(hits);
-      event.target.removeAttribute('disabled');
-    })
-    .catch(console.log);
+    hitsCounter += hits.length;
+
+    if (hitsCounter >= totalHits) {
+      loadMoreBtn.classList.add('is-hidden');
+      Notiflix.Notify.failure(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
+
+    lightbox.refresh();
+    renderGallery(hits);
+    event.target.removeAttribute('disabled');
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function renderGallery(hits) {
