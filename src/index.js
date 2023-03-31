@@ -1,5 +1,7 @@
 import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
 import './css/styles.css';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import ImagesApiService from './searchImages-api';
 
 const formEl = document.querySelector('#search-form');
@@ -12,7 +14,9 @@ loadMoreBtn.classList.add('is-hidden');
 
 formEl.addEventListener('submit', handleSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
+
 let hitsCounter = 0;
+let lightbox = null;
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -77,6 +81,7 @@ function handleLoadMoreBtnClick(event) {
         );
       }
 
+      lightbox.refresh();
       renderGallery(hits);
       event.target.removeAttribute('disabled');
     })
@@ -86,8 +91,8 @@ function handleLoadMoreBtnClick(event) {
 function renderGallery(hits) {
   const markup = hits
     .map(hit => {
-      return `<div class="photo-card"><div class="photo">
-        <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" /></div>
+      return `<div class="photo-card"><a class="gallery__item" href="${hit.largeImageURL}">
+        <img class="gallery__image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" /></a>
         <div class="info">
           <p class="info-item">
             <b class="info-text">Likes</b><span>${hit.likes}</span>
@@ -107,6 +112,12 @@ function renderGallery(hits) {
     .join('');
 
   galleryEl.insertAdjacentHTML('beforeend', markup);
+
+  lightbox = new SimpleLightbox('.gallery a', {
+    captionSelector: 'img',
+    captionDelay: 250,
+    scrollZoom: false,
+  });
 }
 
 function clearCardsContainer() {
