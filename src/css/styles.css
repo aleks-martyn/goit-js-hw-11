@@ -11,18 +11,10 @@ body {
   color: #212121;
 }
 
-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: unset;
-  object-fit: cover;
-}
-
 #search-form {
   font: inherit;
   padding: 8px;
-  max-width: 300px;
+  max-width: 280px;
   margin-bottom: 16px;
   margin-left: auto;
   margin-right: auto;
@@ -58,10 +50,11 @@ button[type='submit'] {
     1px 4px 6px rgba(0, 0, 0, 0.16);
 }
 
-.photo {
-  max-width: 100%;
-  height: auto;
-  background-size: cover;
+.gallery__image {
+  width: 100%;
+  height: 100%;
+  
+  object-fit: cover;
 }
 
 .info {
