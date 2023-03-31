@@ -7,16 +7,13 @@ import ImagesApiService from './searchImages-api';
 const formEl = document.querySelector('#search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
-
 const imagesApiService = new ImagesApiService();
-
-loadMoreBtn.classList.add('is-hidden');
+let hitsCounter = 0;
+let lightbox = null;
 
 formEl.addEventListener('submit', handleSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
-
-let hitsCounter = 0;
-let lightbox = null;
+loadMoreBtn.classList.add('is-hidden');
 
 async function handleSubmit(event) {
   event.preventDefault();
@@ -56,7 +53,7 @@ async function handleSubmit(event) {
     }
 
     hitsCounter += hits.length;
-
+    
     clearCardsContainer();
     renderGallery(hits);
     event.target.lastElementChild.removeAttribute('disabled');
@@ -86,6 +83,7 @@ async function handleLoadMoreBtnClick(event) {
 
     lightbox.refresh();
     renderGallery(hits);
+    
     event.target.removeAttribute('disabled');
   } catch (error) {
     console.log(error);
