@@ -53,7 +53,7 @@ async function handleSubmit(event) {
     }
 
     hitsCounter += hits.length;
-    
+
     clearCardsContainer();
     renderGallery(hits);
     event.target.lastElementChild.removeAttribute('disabled');
@@ -83,12 +83,13 @@ async function handleLoadMoreBtnClick(event) {
 
     renderGallery(hits);
 
-    const { height: cardHeight } = galleryEl.firstElementChild.getBoundingClientRect();
+    const { height: cardHeight } =
+      galleryEl.firstElementChild.getBoundingClientRect();
     window.scrollBy({
       top: cardHeight * 2.6,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
-    
+
     lightbox.refresh();
     event.target.removeAttribute('disabled');
   } catch (error) {
