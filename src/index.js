@@ -86,7 +86,7 @@ async function handleLoadMoreBtnClick(event) {
     const { height: cardHeight } =
       galleryEl.firstElementChild.getBoundingClientRect();
     window.scrollBy({
-      top: cardHeight * 2.6,
+      top: cardHeight * 2.5,
       behavior: 'smooth',
     });
 
