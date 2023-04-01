@@ -82,6 +82,13 @@ async function handleLoadMoreBtnClick(event) {
     }
 
     renderGallery(hits);
+
+    const { height: cardHeight } = galleryEl.firstElementChild.getBoundingClientRect();
+    window.scrollBy({
+      top: cardHeight * 2.6,
+      behavior: "smooth",
+    });
+    
     lightbox.refresh();
     event.target.removeAttribute('disabled');
   } catch (error) {
